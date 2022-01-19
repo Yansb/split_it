@@ -19,9 +19,9 @@ class _SplashPageState extends State<SplashPage> {
         options: DefaultFirebaseOptions.currentPlatform,
       );
       await Future.delayed(const Duration(seconds: 2));
-      Navigator.pushNamed(context, "/login");
+      Navigator.pushReplacementNamed(context, "/login");
     } catch (e) {
-      Navigator.pushNamed(context, "/error");
+      Navigator.pushReplacementNamed(context, "/error");
     }
   }
 
