@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:split_it/modules/login/login_controller.dart';
+import 'package:split_it/modules/login/login_state.dart';
 import 'package:split_it/modules/login/widgets/social_button.dart';
 import 'package:split_it/theme/app_theme.dart';
 
@@ -10,6 +12,17 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  late LoginController controller;
+
+  @override
+  void initState() {
+    controller = LoginController(onUpdate: () {
+      print(controller.state.toString());
+      setState(() {});
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,21 +62,32 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(
                 height: 32,
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 32),
-                child: SocialButtonWidget(
+              if (controller.state is LoginStateLoading) ...[
+                const CircularProgressIndicator(),
+              ] else if (controller.state is LoginStateFailure) ...[
+                Text((controller.state as LoginStateFailure).message)
+              ] else
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 32),
+                  child: SocialButtonWidget(
                     imagePath: "assets/images/Google.png",
-                    label: "Entrar com Google"),
-              ),
+                    label: "Entrar com Google",
+                    onTap: () {
+                      controller.googleSignIn();
+                    },
+                  ),
+                ),
               const SizedBox(
                 height: 12,
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 32),
-                child: SocialButtonWidget(
-                    imagePath: "assets/images/Apple.png",
-                    label: "Entrar com Apple"),
-              ),
+              )
+//               Padding(
+//                 padding: EdgeInsets.symmetric(horizontal: 32),
+//                 child: SocialButtonWidget(
+//                     imagePath: "assets/images/Apple.png",
+//                     label: "Entrar com Apple",
+//                     onTap: () {},
+// ),
+//               ),
             ],
           ),
         ],
