@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:split_it/modules/home/home_controller.dart';
-import 'package:split_it/modules/home/repositories/home_repository.dart';
-import 'package:split_it/modules/home/repositories/home_repository_mock.dart';
-import 'package:split_it/modules/home/widgets/app_bar_widget.dart';
+import 'package:split_it/modules/home/home_state.dart';
+import 'package:split_it/modules/home/widgets/app_bar/app_bar_widget.dart';
 import 'package:split_it/modules/home/widgets/event_tile_widget.dart';
 import 'package:split_it/modules/login/models/user_model.dart';
 
@@ -18,7 +17,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    controller.getEvents(() {
+    controller.getEvents();
+    controller.listen((state) {
       setState(() {});
     });
     super.initState();
@@ -36,11 +36,20 @@ class _HomePageState extends State<HomePage> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: SingleChildScrollView(
-          child: Column(
-            children: controller.events
-                .map((e) => EventTileWidget(model: e))
-                .toList(),
-          ),
+          child: Column(children: [
+            if (controller.state is HomeStateLoading) ...[
+              const Center(child: CircularProgressIndicator()),
+            ] else if (controller.state is HomeStateSuccess) ...[
+              ...(controller.state as HomeStateSuccess)
+                  .events
+                  .map((e) => EventTileWidget(model: e))
+                  .toList()
+            ] else if (controller.state is HomeStateFailure) ...[
+              Text((controller.state as HomeStateFailure).message)
+            ] else ...[
+              Container()
+            ],
+          ]),
         ),
       ),
     );
