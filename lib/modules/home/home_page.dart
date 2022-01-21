@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:split_it/modules/home/home_controller.dart';
 import 'package:split_it/modules/home/repositories/home_repository.dart';
 import 'package:split_it/modules/home/repositories/home_repository_mock.dart';
 import 'package:split_it/modules/home/widgets/app_bar_widget.dart';
@@ -13,17 +14,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final events = [];
-  late HomeRepository repository;
-  void getEvents() async {
-    final response = await repository.getEvents();
-    events.addAll(response);
-    setState(() {});
-  }
+  final controller = HomeController();
 
+  @override
   void initState() {
-    repository = HomeRepositoryMock();
-    getEvents();
+    controller.getEvents(() {
+      setState(() {});
+    });
     super.initState();
   }
 
@@ -40,7 +37,9 @@ class _HomePageState extends State<HomePage> {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: SingleChildScrollView(
           child: Column(
-            children: events.map((e) => EventTileWidget(model: e)).toList(),
+            children: controller.events
+                .map((e) => EventTileWidget(model: e))
+                .toList(),
           ),
         ),
       ),
