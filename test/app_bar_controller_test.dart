@@ -1,11 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:split_it/modules/home/home_state.dart';
 import 'package:split_it/modules/home/models/dashboard_model.dart';
 import 'package:split_it/modules/home/repositories/home_repository.dart';
 import 'package:split_it/modules/home/widgets/app_bar/app_bar_controller.dart';
 import 'package:split_it/modules/home/widgets/app_bar/app_bar_state.dart';
-import 'package:split_it/shared/models/event_model.dart';
 
 class AppBarRepositoryMock extends Mock implements HomeRepository {}
 

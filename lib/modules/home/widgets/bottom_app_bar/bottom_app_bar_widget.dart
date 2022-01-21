@@ -27,7 +27,19 @@ class _BottomAppBarWidgetState extends State<BottomAppBarWidget> {
     switch (controller.state.runtimeType) {
       case AppBarStateLoading:
         {
-          return const CircularProgressIndicator();
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: const [
+              InfoCardWidget(
+                value: 0,
+                isLoading: true,
+              ),
+              InfoCardWidget(
+                value: 0,
+                isLoading: true,
+              ),
+            ],
+          );
         }
       case AppBarStateSuccess:
         {

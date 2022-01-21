@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:split_it/modules/home/widgets/icon_dollar_widget.dart';
+import 'package:split_it/shared/widgets/loading_widget.dart';
 import 'package:split_it/theme/app_theme.dart';
 
 class InfoCardWidget extends StatelessWidget {
   final double value;
-  const InfoCardWidget({Key? key, required this.value}) : super(key: key);
+  final bool isLoading;
+  const InfoCardWidget({
+    Key? key,
+    required this.value,
+    this.isLoading = false,
+  }) : super(key: key);
 
   TextStyle get textStyle => value >= 0
       ? AppTheme.textStyles.infoCardSubTitle1
@@ -37,10 +43,14 @@ class InfoCardWidget extends StatelessWidget {
                 "A $title",
                 style: AppTheme.textStyles.infoCardTitle,
               ),
-              Text(
-                "R\$ $value",
-                style: textStyle,
-              )
+              if (isLoading) ...[
+                const LoadingWidget(size: Size(94, 24))
+              ] else ...[
+                Text(
+                  "R\$ $value",
+                  style: textStyle,
+                )
+              ]
             ],
           )
         ],
