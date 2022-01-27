@@ -19,6 +19,16 @@ abstract class AppColors {
   Color get eventTileMoney;
   Color get eventTilePeople;
   Color get divider;
+  Color get stepperIndicatorPrimary;
+  Color get stepperIndicatorSecondary;
+  Color get backButton;
+  Color get stepperNextButton;
+  Color get stepperNextButtonDisabled;
+  Color get stepperTitle;
+  Color get stepperDescription;
+  Color get hintTextField;
+  Color get textField;
+  Color get inputBorder;
 }
 
 class AppColorsDefault implements AppColors {
@@ -75,4 +85,34 @@ class AppColorsDefault implements AppColors {
 
   @override
   Color get divider => const Color(0XFF666666);
+
+  @override
+  Color get stepperIndicatorPrimary => const Color(0xFF3CAB82);
+
+  @override
+  Color get stepperIndicatorSecondary => const Color(0xFF666666);
+
+  @override
+  Color get backButton => const Color(0xFF666666);
+
+  @override
+  Color get stepperNextButton => const Color(0XFF455250);
+
+  @override
+  Color get stepperNextButtonDisabled => const Color(0XFF666666);
+
+  @override
+  Color get stepperDescription => const Color(0XFF455250);
+
+  @override
+  Color get stepperTitle => const Color(0XFF455250);
+
+  @override
+  Color get hintTextField => const Color(0XFF666666);
+
+  @override
+  Color get textField => const Color(0XFF455250);
+
+  @override
+  Color get inputBorder => const Color(0xFF455250);
 }

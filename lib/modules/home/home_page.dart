@@ -31,7 +31,9 @@ class _HomePageState extends State<HomePage> {
         ModalRoute.of(context)!.settings.arguments as UserModel;
     return Scaffold(
       appBar: AppBarWidget(
-        onTapAddButton: () {},
+        onTapAddButton: () {
+          Navigator.pushNamed(context, "/create_split");
+        },
         user: user,
       ),
       body: Padding(
