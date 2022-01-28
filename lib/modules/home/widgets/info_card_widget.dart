@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:split_it/modules/home/widgets/icon_dollar_widget.dart';
+import 'package:split_it/shared/utils/numberFormatter.dart';
 import 'package:split_it/shared/widgets/loading_widget.dart';
 import 'package:split_it/theme/app_theme.dart';
 
-class InfoCardWidget extends StatelessWidget {
+class InfoCardWidget extends StatefulWidget {
   final double value;
   final bool isLoading;
   const InfoCardWidget({
@@ -12,13 +13,21 @@ class InfoCardWidget extends StatelessWidget {
     this.isLoading = false,
   }) : super(key: key);
 
-  TextStyle get textStyle => value >= 0
+  @override
+  State<InfoCardWidget> createState() => _InfoCardWidgetState();
+}
+
+class _InfoCardWidgetState extends State<InfoCardWidget> {
+  final formatter = NumberFormater();
+
+  TextStyle get textStyle => widget.value >= 0
       ? AppTheme.textStyles.infoCardSubTitle1
       : AppTheme.textStyles.infoCardSubTitle2;
 
   IconDollarType get iconDollarType =>
-      value >= 0 ? IconDollarType.receive : IconDollarType.send;
-  String get title => value >= 0 ? "receber" : "pagar";
+      widget.value >= 0 ? IconDollarType.receive : IconDollarType.send;
+
+  String get title => widget.value >= 0 ? "receber" : "pagar";
 
   @override
   Widget build(BuildContext context) {
@@ -43,11 +52,11 @@ class InfoCardWidget extends StatelessWidget {
                 "A $title",
                 style: AppTheme.textStyles.infoCardTitle,
               ),
-              if (isLoading) ...[
+              if (widget.isLoading) ...[
                 const LoadingWidget(size: Size(94, 24))
               ] else ...[
                 Text(
-                  "R\$ $value",
+                  "R\$ ${formatter.currencyFormatter(widget.value)}",
                   style: textStyle,
                 )
               ]

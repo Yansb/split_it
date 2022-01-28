@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:split_it/modules/home/widgets/icon_dollar_widget.dart';
 import 'package:split_it/shared/models/event_model.dart';
+import 'package:split_it/shared/utils/numberFormatter.dart';
 import 'package:split_it/shared/widgets/loading_widget.dart';
 import 'package:split_it/theme/app_theme.dart';
 
-class EventTileWidget extends StatelessWidget {
+class EventTileWidget extends StatefulWidget {
   final EventModel model;
   final bool isLoading;
 
@@ -15,12 +16,19 @@ class EventTileWidget extends StatelessWidget {
     this.isLoading = false,
   }) : super(key: key);
 
+  @override
+  State<EventTileWidget> createState() => _EventTileWidgetState();
+}
+
+class _EventTileWidgetState extends State<EventTileWidget> {
+  final formatClass = NumberFormater();
+
   IconDollarType get type =>
-      model.value! >= 0 ? IconDollarType.receive : IconDollarType.send;
+      widget.model.value! >= 0 ? IconDollarType.receive : IconDollarType.send;
 
   @override
   Widget build(BuildContext context) {
-    if (isLoading) {
+    if (widget.isLoading) {
       return Row(
         children: [
           const LoadingWidget(size: Size(48, 48)),
@@ -62,22 +70,22 @@ class EventTileWidget extends StatelessWidget {
                 ListTile(
                   contentPadding: EdgeInsets.zero,
                   title: Text(
-                    model.title!,
+                    widget.model.title!,
                     style: AppTheme.textStyles.eventTileTitle,
                   ),
                   subtitle: Text(
-                    model.created!.toIso8601String(),
+                    formatClass.dateFormatter(widget.model.created!),
                     style: AppTheme.textStyles.eventTileSubtitle,
                   ),
                   trailing: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "R\$ ${model.value}",
+                        "R\$ ${formatClass.currencyFormatter(widget.model.value!)}",
                         style: AppTheme.textStyles.eventTileMoney,
                       ),
                       Text(
-                        "${model.people} ${model.people! > 1 ? 'pessoas' : 'pessoa'}",
+                        "${widget.model.people} ${widget.model.people! > 1 ? 'pessoas' : 'pessoa'}",
                         style: AppTheme.textStyles.eventTilePeople,
                       )
                     ],
