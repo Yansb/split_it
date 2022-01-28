@@ -30,33 +30,48 @@ class _HomePageState extends State<HomePage> {
     final UserModel user =
         ModalRoute.of(context)!.settings.arguments as UserModel;
     return Scaffold(
-      appBar: AppBarWidget(
-        onTapAddButton: () {
-          Navigator.pushNamed(context, "/create_split");
-        },
-        user: user,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: SingleChildScrollView(
-          child: Column(children: [
-            if (controller.state is HomeStateLoading) ...[
-              ...List.generate(
-                  2,
-                  (index) =>
-                      EventTileWidget(isLoading: true, model: EventModel()))
-            ] else if (controller.state is HomeStateSuccess) ...[
-              ...(controller.state as HomeStateSuccess)
-                  .events
-                  .map((e) => EventTileWidget(model: e))
-                  .toList()
-            ] else if (controller.state is HomeStateFailure) ...[
-              Text((controller.state as HomeStateFailure).message)
-            ] else ...[
-              Container()
-            ],
-          ]),
-        ),
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverAppBar(
+            pinned: true,
+            snap: false,
+            floating: true,
+            expandedHeight: 265,
+            backgroundColor: Colors.transparent,
+            flexibleSpace: FlexibleSpaceBar(
+              background: AppBarWidget(
+                onTapAddButton: () {
+                  Navigator.pushNamed(context, "/create_split");
+                },
+                user: user,
+              ),
+            ),
+          ),
+          SliverList(
+            delegate:
+                SliverChildBuilderDelegate((BuildContext context, int index) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(children: [
+                  if (controller.state is HomeStateLoading) ...[
+                    ...List.generate(
+                        2,
+                        (index) => EventTileWidget(
+                            isLoading: true, model: EventModel()))
+                  ] else if (controller.state is HomeStateSuccess) ...[
+                    ...(controller.state as HomeStateSuccess)
+                        .events
+                        .map((e) => EventTileWidget(model: e))
+                  ] else if (controller.state is HomeStateFailure) ...[
+                    Text((controller.state as HomeStateFailure).message)
+                  ] else ...[
+                    Container()
+                  ],
+                ]),
+              );
+            }, childCount: 1),
+          )
+        ],
       ),
     );
   }
