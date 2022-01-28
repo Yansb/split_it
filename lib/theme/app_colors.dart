@@ -29,6 +29,15 @@ abstract class AppColors {
   Color get hintTextField;
   Color get textField;
   Color get inputBorder;
+  Color get detailsTitle;
+  Color get detailsBackground;
+  Color get checkboxBackground;
+  Color get checkboxBackgroundSelected;
+  Color get uncheckedCheckbox;
+  Color get positiveMoneyDetails;
+  Color get negativeMoneyDetails;
+  Color get detailsSubtitle;
+  Color get detailsName;
 }
 
 class AppColorsDefault implements AppColors {
@@ -115,4 +124,31 @@ class AppColorsDefault implements AppColors {
 
   @override
   Color get inputBorder => const Color(0xFF455250);
+
+  @override
+  Color get detailsTitle => const Color(0XFF455250);
+
+  @override
+  Color get detailsBackground => const Color(0XFFF1F1F0);
+
+  @override
+  Color get checkboxBackground => const Color(0XFFe0f3ed);
+
+  @override
+  Color get checkboxBackgroundSelected => const Color(0XFFf0f1f1);
+
+  @override
+  Color get uncheckedCheckbox => const Color(0XFFC0CCC9);
+
+  @override
+  Color get positiveMoneyDetails => const Color(0XFF40B28C);
+
+  @override
+  Color get negativeMoneyDetails => const Color(0XFFE83F5B);
+
+  @override
+  Color get detailsSubtitle => const Color(0XFF455250);
+
+  @override
+  Color get detailsName => const Color(0XFF666666);
 }

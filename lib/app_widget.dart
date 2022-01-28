@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:split_it/modules/create_split/create_split_page.dart';
+import 'package:split_it/modules/details/details_page.dart';
 import 'package:split_it/modules/login/login_page.dart';
 import 'package:split_it/modules/splash/splash_page.dart';
 
@@ -20,6 +21,7 @@ class AppWidget extends StatelessWidget {
         "/error": (context) => const ErrorPage(),
         "/home": (context) => const HomePage(),
         "/create_split": (context) => const CreateSplitPage(),
+        "/split_details": (context) => const DetailsPage(),
       },
     );
   }

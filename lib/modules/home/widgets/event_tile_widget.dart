@@ -9,11 +9,13 @@ import 'package:split_it/theme/app_theme.dart';
 class EventTileWidget extends StatefulWidget {
   final EventModel model;
   final bool isLoading;
+  final VoidCallback onTap;
 
   const EventTileWidget({
     Key? key,
     required this.model,
     this.isLoading = false,
+    required this.onTap,
   }) : super(key: key);
 
   @override
@@ -68,6 +70,7 @@ class _EventTileWidgetState extends State<EventTileWidget> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 ListTile(
+                  onTap: widget.onTap,
                   contentPadding: EdgeInsets.zero,
                   title: Text(
                     widget.model.title!,

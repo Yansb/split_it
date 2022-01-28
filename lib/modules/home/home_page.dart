@@ -57,11 +57,18 @@ class _HomePageState extends State<HomePage> {
                     ...List.generate(
                         2,
                         (index) => EventTileWidget(
-                            isLoading: true, model: EventModel()))
+                              isLoading: true,
+                              model: EventModel(),
+                              onTap: () {},
+                            ))
                   ] else if (controller.state is HomeStateSuccess) ...[
                     ...(controller.state as HomeStateSuccess)
                         .events
-                        .map((e) => EventTileWidget(model: e))
+                        .map((e) => EventTileWidget(
+                            model: e,
+                            onTap: () {
+                              Navigator.pushNamed(context, "/split_details");
+                            }))
                   ] else if (controller.state is HomeStateFailure) ...[
                     Text((controller.state as HomeStateFailure).message)
                   ] else ...[

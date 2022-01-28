@@ -22,6 +22,15 @@ abstract class AppTextStyles {
   TextStyle get stepperDescription;
   TextStyle get hintTextField;
   TextStyle get textField;
+  TextStyle get detailsTitle;
+  TextStyle get detailsPositiveSubtitle;
+  TextStyle get detailsPositiveSubtitleBold;
+  TextStyle get detailsNegativeSubtitle;
+  TextStyle get detailsNegativeSubtitleBold;
+  TextStyle get detailsSubtitle;
+  TextStyle get detailsName;
+  TextStyle get detailsItensTitle;
+  TextStyle get detailsItensSubtitle;
 }
 
 class AppTextStylesDefault implements AppTextStyles {
@@ -144,10 +153,72 @@ class AppTextStylesDefault implements AppTextStyles {
       );
 
   @override
-  // TODO: implement stepperNextButtonDisabled
   TextStyle get stepperNextButtonDisabled => GoogleFonts.inter(
         fontSize: 12,
         fontWeight: FontWeight.w500,
         color: AppTheme.colors.stepperNextButtonDisabled,
+      );
+
+  @override
+  TextStyle get detailsTitle => GoogleFonts.montserrat(
+        fontSize: 22,
+        fontWeight: FontWeight.w700,
+        color: AppTheme.colors.detailsTitle,
+      );
+
+  @override
+  TextStyle get detailsNegativeSubtitle => GoogleFonts.roboto(
+        fontSize: 12,
+        fontWeight: FontWeight.normal,
+        color: AppTheme.colors.negativeMoneyDetails,
+      );
+
+  @override
+  TextStyle get detailsNegativeSubtitleBold => GoogleFonts.roboto(
+        fontSize: 12,
+        fontWeight: FontWeight.bold,
+        color: AppTheme.colors.negativeMoneyDetails,
+      );
+
+  @override
+  TextStyle get detailsPositiveSubtitle => GoogleFonts.roboto(
+        fontSize: 12,
+        fontWeight: FontWeight.normal,
+        color: AppTheme.colors.positiveMoneyDetails,
+      );
+
+  @override
+  TextStyle get detailsPositiveSubtitleBold => GoogleFonts.roboto(
+        fontSize: 12,
+        fontWeight: FontWeight.bold,
+        color: AppTheme.colors.positiveMoneyDetails,
+      );
+
+  @override
+  TextStyle get detailsSubtitle => GoogleFonts.roboto(
+        fontSize: 14,
+        fontWeight: FontWeight.w700,
+        color: AppTheme.colors.detailsSubtitle,
+      );
+
+  @override
+  TextStyle get detailsName => GoogleFonts.roboto(
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
+        color: AppTheme.colors.detailsName,
+      );
+
+  @override
+  TextStyle get detailsItensSubtitle => GoogleFonts.roboto(
+        fontSize: 14,
+        fontWeight: FontWeight.w400,
+        color: AppTheme.colors.detailsSubtitle,
+      );
+
+  @override
+  TextStyle get detailsItensTitle => GoogleFonts.roboto(
+        fontSize: 14,
+        fontWeight: FontWeight.w700,
+        color: AppTheme.colors.detailsSubtitle,
       );
 }
