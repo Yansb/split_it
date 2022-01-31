@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:split_it/modules/create_split/create_split_controller.dart';
 import 'package:split_it/theme/app_theme.dart';
 
 class CreateSplitAppBarWidget extends PreferredSize {
   final int pages;
   final VoidCallback iconButtonPress;
-  final int currentPage;
+  final CreateSplitController controller;
   CreateSplitAppBarWidget({
+    required this.controller,
     required this.pages,
     required this.iconButtonPress,
-    required this.currentPage,
     Key? key,
   }) : super(
           key: key,
@@ -20,9 +22,7 @@ class CreateSplitAppBarWidget extends PreferredSize {
                 Padding(
                   padding: const EdgeInsets.only(left: 8),
                   child: IconButton(
-                    onPressed: () {
-                      iconButtonPress();
-                    },
+                    onPressed: controller.previousPage,
                     icon: Icon(
                       Icons.arrow_back,
                       color: AppTheme.colors.backButton,
@@ -31,15 +31,19 @@ class CreateSplitAppBarWidget extends PreferredSize {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(right: 24),
-                  child: Text.rich(TextSpan(
-                      text: "0$currentPage",
-                      style: AppTheme.textStyles.stepperIndicatorPrimary,
-                      children: [
-                        TextSpan(
-                            text: " - 0$pages",
-                            style:
-                                AppTheme.textStyles.stepperIndicatorSecondary)
-                      ])),
+                  child: Observer(
+                    builder: (_) {
+                      return Text.rich(TextSpan(
+                          text: "0${controller.currentPage + 1}",
+                          style: AppTheme.textStyles.stepperIndicatorPrimary,
+                          children: [
+                            TextSpan(
+                                text: " - 0$pages",
+                                style: AppTheme
+                                    .textStyles.stepperIndicatorSecondary)
+                          ]));
+                    },
+                  ),
                 )
               ],
             ),
