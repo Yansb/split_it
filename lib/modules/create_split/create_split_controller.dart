@@ -21,7 +21,7 @@ abstract class _CreateSplitControllerBase with Store {
 
   @action
   void nextPage() {
-    if (currentPage < 2) {
+    if (currentPage < 3) {
       currentPage++;
     }
   }
@@ -64,6 +64,7 @@ abstract class _CreateSplitControllerBase with Store {
       status = "loading";
       final response = await repository.create(event);
       status = "success";
+      nextPage();
     } catch (e) {
       status = "error";
     }

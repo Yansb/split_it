@@ -10,20 +10,22 @@ import 'package:split_it/shared/models/friend_model.dart';
 class EventModel extends BaseModel {
   final String name;
   final DateTime? created;
-  final double? value;
+  final double value;
   final List<ItemModel> items;
   final List<FriendModel> friends;
-  int get valueSplit => ((value ?? 0) / friends.length).round();
+  double get valueSplit => (calcValue / friends.length);
   int get people => friends.length;
-  double get calcValue => items
-      .reduce((value, element) =>
-          value = value.copyWith(value: value.value + element.value))
-      .value;
+  double get calcValue => items.isNotEmpty
+      ? items
+          .reduce((value, element) =>
+              value = value.copyWith(value: value.value + element.value))
+          .value
+      : 0.0;
 
   EventModel({
     this.name = '',
     this.created,
-    this.value,
+    this.value = 0.0,
     this.items = const [],
     this.friends = const [],
   }) : super(collection: "/events");
@@ -38,7 +40,7 @@ class EventModel extends BaseModel {
     return EventModel(
       name: name ?? this.name,
       created: created ?? this.created,
-      value: value == null ? calcValue : this.value,
+      value: value == 0.0 ? calcValue : this.value,
       items: items ?? this.items,
       friends: friends ?? this.friends,
     );

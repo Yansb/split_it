@@ -26,7 +26,7 @@ class _EventTileWidgetState extends State<EventTileWidget> {
   final formatClass = NumberFormater();
 
   IconDollarType get type =>
-      widget.model.value! >= 0 ? IconDollarType.receive : IconDollarType.send;
+      widget.model.value >= 0 ? IconDollarType.receive : IconDollarType.send;
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +73,7 @@ class _EventTileWidgetState extends State<EventTileWidget> {
                   onTap: widget.onTap,
                   contentPadding: EdgeInsets.zero,
                   title: Text(
-                    widget.model.name!,
+                    widget.model.name,
                     style: AppTheme.textStyles.eventTileTitle,
                   ),
                   subtitle: Text(
@@ -84,11 +84,11 @@ class _EventTileWidgetState extends State<EventTileWidget> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "R\$ ${formatClass.currencyFormatter(widget.model.value!)}",
+                        "R\$ ${formatClass.currencyFormatter(widget.model.value)}",
                         style: AppTheme.textStyles.eventTileMoney,
                       ),
                       Text(
-                        "${widget.model.people} ${widget.model.people! > 1 ? 'pessoas' : 'pessoa'}",
+                        "${widget.model.people} ${widget.model.people > 1 ? 'pessoas' : 'pessoa'}",
                         style: AppTheme.textStyles.eventTilePeople,
                       )
                     ],
