@@ -31,6 +31,8 @@ abstract class AppTextStyles {
   TextStyle get detailsName;
   TextStyle get detailsItensTitle;
   TextStyle get detailsItensSubtitle;
+  TextStyle get personTileTitle;
+  TextStyle get personTileTitleSelected;
 }
 
 class AppTextStylesDefault implements AppTextStyles {
@@ -220,5 +222,19 @@ class AppTextStylesDefault implements AppTextStyles {
         fontSize: 14,
         fontWeight: FontWeight.w700,
         color: AppTheme.colors.detailsSubtitle,
+      );
+
+  @override
+  TextStyle get personTileTitle => GoogleFonts.inter(
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
+        color: AppTheme.colors.stepperNextButtonDisabled,
+      );
+
+  @override
+  TextStyle get personTileTitleSelected => GoogleFonts.roboto(
+        fontSize: 16,
+        fontWeight: FontWeight.w700,
+        color: AppTheme.colors.personTileTitleSelected,
       );
 }

@@ -38,6 +38,9 @@ abstract class AppColors {
   Color get negativeMoneyDetails;
   Color get detailsSubtitle;
   Color get detailsName;
+  Color get iconRemove;
+  Color get iconAdd;
+  Color get personTileTitleSelected;
 }
 
 class AppColorsDefault implements AppColors {
@@ -151,4 +154,13 @@ class AppColorsDefault implements AppColors {
 
   @override
   Color get detailsName => const Color(0XFF666666);
+
+  @override
+  Color get iconAdd => const Color(0XFF40B28C);
+
+  @override
+  Color get iconRemove => const Color(0XFFE83F5B);
+
+  @override
+  Color get personTileTitleSelected => const Color(0XFF455250);
 }
