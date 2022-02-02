@@ -6,14 +6,20 @@ import 'package:split_it/theme/app_theme.dart';
 
 class BottomStepperBarWidget extends StatelessWidget {
   final VoidCallback onPrevious;
-  final VoidCallback onNext;
   final CreateSplitController controller;
   const BottomStepperBarWidget({
     Key? key,
     required this.controller,
     required this.onPrevious,
-    required this.onNext,
   }) : super(key: key);
+
+  void onTapNext() {
+    if (controller.currentPage == 2) {
+      controller.saveEvent();
+    } else {
+      controller.nextPage();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +48,9 @@ class BottomStepperBarWidget extends StatelessWidget {
                   return Expanded(
                       child: StepperNextButtonWidget(
                     isActive: controller.enableNavigateButton,
-                    label: "Continuar",
-                    onTap: onNext,
+                    label:
+                        controller.currentPage == 2 ? "Finalizar" : "Continuar",
+                    onTap: onTapNext,
                   ));
                 })
               ],

@@ -25,7 +25,7 @@ class _StepThreePageState extends State<StepThreePage> {
   @override
   void initState() {
     autorun((_) {
-      widget.controller.setItems(controller.items.toList());
+      widget.controller.onChanged(items: controller.items.toList());
     });
     super.initState();
   }

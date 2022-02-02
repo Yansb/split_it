@@ -1,6 +1,8 @@
 import 'package:mobx/mobx.dart';
+import 'package:split_it/shared/models/event_model.dart';
 import 'package:split_it/shared/models/friend_model.dart';
 import 'package:split_it/shared/models/item_model.dart';
+import 'package:split_it/shared/repositories/firebase_repository.dart';
 
 part 'create_split_controller.g.dart';
 
@@ -8,11 +10,11 @@ class CreateSplitController = _CreateSplitControllerBase
     with _$CreateSplitController;
 
 abstract class _CreateSplitControllerBase with Store {
-  @observable
-  String eventName = "";
+  final FirebaseRepository repository;
+  _CreateSplitControllerBase({required this.repository});
 
   @observable
-  List<FriendModel> selectedFriends = [];
+  EventModel event = EventModel();
 
   @observable
   int currentPage = 0;
@@ -31,16 +33,13 @@ abstract class _CreateSplitControllerBase with Store {
     }
   }
 
-  @observable
-  List<ItemModel> items = <ItemModel>[];
-
   @computed
   bool get enableNavigateButton {
-    if (eventName.isNotEmpty && currentPage == 0) {
+    if (event.name.isNotEmpty && currentPage == 0) {
       return true;
-    } else if (selectedFriends.isNotEmpty && currentPage == 1) {
+    } else if (event.friends.isNotEmpty && currentPage == 1) {
       return true;
-    } else if (items.isNotEmpty && currentPage == 2) {
+    } else if (event.items.isNotEmpty && currentPage == 2) {
       return true;
     } else {
       return false;
@@ -48,17 +47,25 @@ abstract class _CreateSplitControllerBase with Store {
   }
 
   @action
-  void setSelectedFriends(List<FriendModel> list) {
-    selectedFriends = list;
+  void onChanged({
+    String? name,
+    List<ItemModel>? items,
+    List<FriendModel>? friends,
+  }) {
+    event = event.copyWith(name: name, items: items, friends: friends);
   }
 
-  @action
-  setItems(List<ItemModel> list) {
-    items = list;
-  }
+  @observable
+  String status = "empty";
 
   @action
-  void setEventName(String name) {
-    eventName = name;
+  Future<void> saveEvent() async {
+    try {
+      status = "loading";
+      final response = await repository.create(event);
+      status = "success";
+    } catch (e) {
+      status = "error";
+    }
   }
 }

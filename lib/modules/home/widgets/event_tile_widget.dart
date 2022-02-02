@@ -73,7 +73,7 @@ class _EventTileWidgetState extends State<EventTileWidget> {
                   onTap: widget.onTap,
                   contentPadding: EdgeInsets.zero,
                   title: Text(
-                    widget.model.title!,
+                    widget.model.name!,
                     style: AppTheme.textStyles.eventTileTitle,
                   ),
                   subtitle: Text(

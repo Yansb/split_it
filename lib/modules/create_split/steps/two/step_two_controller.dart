@@ -11,7 +11,7 @@ abstract class _StepTwoControllerBase with Store {
   final repository = FirebaseRepository();
   _StepTwoControllerBase({required this.controller}) {
     autorun((_) {
-      controller.setSelectedFriends(_selectedFriends);
+      controller.onChanged(friends: _selectedFriends);
     });
   }
 

@@ -24,7 +24,10 @@ void main() {
     });
     when(repository.getEvents).thenAnswer((_) async => [
           EventModel(
-              title: "title", created: DateTime.now(), value: 100, people: 1)
+            name: "title",
+            created: DateTime.now(),
+            value: 100,
+          )
         ]);
     await controller.getEvents();
     expect(states[0], isInstanceOf<HomeStateEmpty>());

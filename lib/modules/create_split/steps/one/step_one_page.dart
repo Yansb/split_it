@@ -18,7 +18,7 @@ class _StepOnePageState extends State<StepOnePage> {
       const StepTitleWidget(title: "Qual o nome", subtitle: "do evento?"),
       StepInputTextWidget(
           onChange: (value) {
-            widget.controller.setEventName(value);
+            widget.controller.onChanged(name: value);
           },
           hintText: "Ex: Churrasco")
     ]);
