@@ -64,6 +64,21 @@ mixin _$CreateSplitController on _CreateSplitControllerBase, Store {
     });
   }
 
+  final _$itemsAtom = Atom(name: '_CreateSplitControllerBase.items');
+
+  @override
+  List<ItemModel> get items {
+    _$itemsAtom.reportRead();
+    return super.items;
+  }
+
+  @override
+  set items(List<ItemModel> value) {
+    _$itemsAtom.reportWrite(value, super.items, () {
+      super.items = value;
+    });
+  }
+
   final _$_CreateSplitControllerBaseActionController =
       ActionController(name: '_CreateSplitControllerBase');
 
@@ -101,6 +116,17 @@ mixin _$CreateSplitController on _CreateSplitControllerBase, Store {
   }
 
   @override
+  dynamic setItems(List<ItemModel> list) {
+    final _$actionInfo = _$_CreateSplitControllerBaseActionController
+        .startAction(name: '_CreateSplitControllerBase.setItems');
+    try {
+      return super.setItems(list);
+    } finally {
+      _$_CreateSplitControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setEventName(String name) {
     final _$actionInfo = _$_CreateSplitControllerBaseActionController
         .startAction(name: '_CreateSplitControllerBase.setEventName');
@@ -117,6 +143,7 @@ mixin _$CreateSplitController on _CreateSplitControllerBase, Store {
 eventName: ${eventName},
 selectedFriends: ${selectedFriends},
 currentPage: ${currentPage},
+items: ${items},
 enableNavigateButton: ${enableNavigateButton}
     ''';
   }

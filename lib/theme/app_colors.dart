@@ -23,6 +23,7 @@ abstract class AppColors {
   Color get stepperIndicatorSecondary;
   Color get backButton;
   Color get stepperNextButton;
+  Color get stepperNextButtonRegular;
   Color get stepperNextButtonDisabled;
   Color get stepperTitle;
   Color get stepperDescription;
@@ -109,6 +110,9 @@ class AppColorsDefault implements AppColors {
 
   @override
   Color get stepperNextButton => const Color(0XFF455250);
+
+  @override
+  Color get stepperNextButtonRegular => const Color(0XFF40b28c);
 
   @override
   Color get stepperNextButtonDisabled => const Color(0XFF666666);

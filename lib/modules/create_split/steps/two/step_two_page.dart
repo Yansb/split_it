@@ -26,53 +26,55 @@ class _StepTwoPageState extends State<StepTwoPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const StepTitleWidget(
-          title: "Com quem",
-          subtitle: "você quer dividir?",
-        ),
-        StepInputTextWidget(
-            onChange: (value) {
-              controller.onChange(value);
-            },
-            hintText: "Nome da pessoa"),
-        Observer(builder: (_) {
-          if (controller.selectedFriends.isEmpty) {
-            return Container();
-          } else {
-            return Column(
-              children: [
-                ...controller.selectedFriends
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          const StepTitleWidget(
+            title: "Com quem",
+            subtitle: "você quer dividir?",
+          ),
+          StepInputTextWidget(
+              onChange: (value) {
+                controller.onChange(value);
+              },
+              hintText: "Nome da pessoa"),
+          Observer(builder: (_) {
+            if (controller.selectedFriends.isEmpty) {
+              return Container();
+            } else {
+              return Column(
+                children: [
+                  ...controller.selectedFriends
+                      .map((e) => PersonTileWidget(
+                            data: e,
+                            onTap: () => {controller.removeFriend(e)},
+                            isSelected: true,
+                          ))
+                      .toList(),
+                  const SizedBox(height: 16)
+                ],
+              );
+            }
+          }),
+          const SizedBox(height: 35),
+          Observer(builder: (_) {
+            if (controller.items.isEmpty) {
+              return const Text("Nenhum amigo encontrado");
+            } else {
+              return Column(
+                children: controller.items
                     .map((e) => PersonTileWidget(
                           data: e,
-                          onTap: () => {controller.removeFriend(e)},
-                          isSelected: true,
+                          onTap: () {
+                            controller.addFriend(e);
+                          },
                         ))
                     .toList(),
-                const SizedBox(height: 16)
-              ],
-            );
-          }
-        }),
-        const SizedBox(height: 35),
-        Observer(builder: (_) {
-          if (controller.items.isEmpty) {
-            return const Text("Nenhum amigo encontrado");
-          } else {
-            return Column(
-              children: controller.items
-                  .map((e) => PersonTileWidget(
-                        data: e,
-                        onTap: () {
-                          controller.addFriend(e);
-                        },
-                      ))
-                  .toList(),
-            );
-          }
-        }),
-      ],
+              );
+            }
+          }),
+        ],
+      ),
     );
   }
 }
