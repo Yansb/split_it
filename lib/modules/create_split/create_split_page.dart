@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
@@ -42,6 +43,7 @@ class _CreateSplitPageState extends State<CreateSplitPage> {
     ];
     _disposer = autorun((_) {
       if (controller.status == CreateSplitStatus.success) {
+        BotToast.closeAllLoading();
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -50,7 +52,13 @@ class _CreateSplitPageState extends State<CreateSplitPage> {
                       formater: formatter,
                     )));
       } else if (controller.status == CreateSplitStatus.error) {
-      } else if (controller.status == CreateSplitStatus.loading) {}
+        BotToast.closeAllLoading();
+        BotToast.showText(
+            text: "Não foi possível cadastrar esse evento",
+            contentColor: Colors.yellow.shade400);
+      } else if (controller.status == CreateSplitStatus.loading) {
+        BotToast.showLoading();
+      }
     });
     super.initState();
   }

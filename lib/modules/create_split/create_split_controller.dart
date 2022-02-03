@@ -66,7 +66,6 @@ abstract class _CreateSplitControllerBase with Store {
       status = CreateSplitStatus.loading;
       await repository.create(event);
       status = CreateSplitStatus.success;
-      nextPage();
     } catch (e) {
       status = CreateSplitStatus.error;
     }
