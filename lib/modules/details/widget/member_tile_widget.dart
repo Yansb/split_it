@@ -42,13 +42,9 @@ class _MemberTileWidgetState extends State<MemberTileWidget> {
           widget.user.name!,
           style: AppTheme.textStyles.detailsName,
         ),
-        subtitle: Text.rich(
-          TextSpan(text: "R\$ ", style: moneyDetails, children: [
-            TextSpan(
-              text: formatClass.currencyFormatter(widget.value),
-              style: moneyDetailsBold,
-            )
-          ]),
+        subtitle: Text(
+          formatClass.currencyFormatter(widget.value),
+          style: moneyDetailsBold,
         ),
         trailing: CheckboxWidget(
           checked: checked,

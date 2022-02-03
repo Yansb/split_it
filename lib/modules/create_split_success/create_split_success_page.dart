@@ -37,7 +37,7 @@ class CreateSplitSuccessPage extends StatelessWidget {
               height: 8,
             ),
             Text(
-              "R\$ ${formater.currencyFormatter(controller.event.valueSplit)}",
+              formater.currencyFormatter(controller.event.valueSplit),
               style: AppTheme.textStyles.title
                   .copyWith(color: AppTheme.colors.backgroundPrimary),
             ),

@@ -5,12 +5,12 @@ import 'package:split_it/theme/app_theme.dart';
 
 class CreateSplitAppBarWidget extends PreferredSize {
   final int pages;
-  final VoidCallback iconButtonPress;
   final CreateSplitController controller;
+  final BuildContext context;
   CreateSplitAppBarWidget({
     required this.controller,
     required this.pages,
-    required this.iconButtonPress,
+    required this.context,
     Key? key,
   }) : super(
           key: key,
@@ -22,7 +22,9 @@ class CreateSplitAppBarWidget extends PreferredSize {
                 Padding(
                   padding: const EdgeInsets.only(left: 8),
                   child: IconButton(
-                    onPressed: controller.previousPage,
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                     icon: Icon(
                       Icons.arrow_back,
                       color: AppTheme.colors.backButton,

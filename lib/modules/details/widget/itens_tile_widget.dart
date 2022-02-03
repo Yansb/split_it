@@ -24,16 +24,8 @@ class _ItensTileWidgetState extends State<ItensTileWidget> {
             widget.item.title,
             style: AppTheme.textStyles.detailsItensTitle,
           ),
-          trailing: Text.rich(
-            TextSpan(
-                text: "R\$ ",
-                style: AppTheme.textStyles.detailsItensSubtitle,
-                children: [
-                  TextSpan(
-                      text: numberFormater.currencyFormatter(widget.item.value),
-                      style: AppTheme.textStyles.detailsItensTitle),
-                ]),
-          ),
+          trailing: Text(numberFormater.currencyFormatter(widget.item.value),
+              style: AppTheme.textStyles.detailsItensTitle),
         ),
         const Divider(
           height: 1,

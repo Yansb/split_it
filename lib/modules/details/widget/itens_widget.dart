@@ -59,16 +59,10 @@ class _ItensWidgetState extends State<ItensWidget> {
                     "Total",
                     style: AppTheme.textStyles.detailsItensTitle,
                   ),
-                  trailing: Text.rich(
-                    TextSpan(
-                        text: "R\$ ",
-                        style: AppTheme.textStyles.detailsItensSubtitle,
-                        children: [
-                          TextSpan(
-                              text: numberFormatter.currencyFormatter(
-                                  mockedList.fold(0, (a, b) => a + b.value)),
-                              style: AppTheme.textStyles.detailsItensTitle),
-                        ]),
+                  trailing: Text(
+                    numberFormatter.currencyFormatter(
+                        mockedList.fold(0, (a, b) => a + b.value)),
+                    style: AppTheme.textStyles.detailsItensTitle,
                   ),
                 ),
               ),

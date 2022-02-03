@@ -26,35 +26,39 @@ class BottomStepperBarWidget extends StatelessWidget {
     return SafeArea(
       bottom: true,
       child: SizedBox(
-        height: 60,
+        height: 61,
         child: Column(
           children: [
-            Row(
-              children: [
-                Observer(builder: (_) {
-                  return Expanded(
-                      child: StepperNextButtonWidget(
-                    isActive: controller.currentPage > 0,
-                    label: "Cancelar",
-                    onTap: onPrevious,
-                  ));
-                }),
-                Container(
-                  width: 1,
-                  height: 60,
-                  color: AppTheme.colors.divider,
-                ),
-                Observer(builder: (_) {
-                  return Expanded(
-                      child: StepperNextButtonWidget(
-                    isActive: controller.enableNavigateButton,
-                    label:
-                        controller.currentPage == 2 ? "Finalizar" : "Continuar",
-                    onTap: onTapNext,
-                  ));
-                })
-              ],
+            Container(
+              width: double.maxFinite,
+              height: 1,
+              color: AppTheme.colors.divider,
             ),
+            Observer(
+                builder: (_) => Row(
+                      children: [
+                        Expanded(
+                            child: StepperNextButtonWidget(
+                          isActive: controller.currentPage > 0,
+                          label: "Cancelar",
+                          onTap: onPrevious,
+                        )),
+                        Container(
+                          width: 1,
+                          height: 60,
+                          color: AppTheme.colors.divider,
+                        ),
+                        Expanded(
+                            child: StepperNextButtonWidget(
+                          isActive: controller.enableNavigateButton,
+                          label: controller.currentPage == 2
+                              ? "Finalizar"
+                              : "Continuar",
+                          colored: controller.currentPage == 2,
+                          onTap: onTapNext,
+                        )),
+                      ],
+                    )),
           ],
         ),
       ),

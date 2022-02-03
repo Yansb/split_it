@@ -84,7 +84,7 @@ class _EventTileWidgetState extends State<EventTileWidget> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "R\$ ${formatClass.currencyFormatter(widget.model.value)}",
+                        formatClass.currencyFormatter(widget.model.value),
                         style: AppTheme.textStyles.eventTileMoney,
                       ),
                       Text(

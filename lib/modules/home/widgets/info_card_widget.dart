@@ -56,7 +56,7 @@ class _InfoCardWidgetState extends State<InfoCardWidget> {
                 const LoadingWidget(size: Size(94, 24))
               ] else ...[
                 Text(
-                  "R\$ ${formatter.currencyFormatter(widget.value)}",
+                  formatter.currencyFormatter(widget.value),
                   style: textStyle,
                 )
               ]

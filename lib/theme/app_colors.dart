@@ -97,7 +97,7 @@ class AppColorsDefault implements AppColors {
   Color get eventTileTitle => const Color(0XFF455250);
 
   @override
-  Color get divider => const Color(0XFF666666);
+  Color get divider => const Color(0XFF666666).withOpacity(0.2);
 
   @override
   Color get stepperIndicatorPrimary => const Color(0xFF3CAB82);
@@ -115,7 +115,8 @@ class AppColorsDefault implements AppColors {
   Color get stepperNextButtonRegular => const Color(0XFF40b28c);
 
   @override
-  Color get stepperNextButtonDisabled => const Color(0XFF666666);
+  Color get stepperNextButtonDisabled =>
+      const Color(0XFF666666).withOpacity(0.2);
 
   @override
   Color get stepperDescription => const Color(0XFF455250);

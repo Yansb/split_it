@@ -76,7 +76,7 @@ class _CreateSplitPageState extends State<CreateSplitPage> {
         appBar: CreateSplitAppBarWidget(
           controller: controller,
           pages: pages.length,
-          iconButtonPress: controller.previousPage,
+          context: context,
         ),
         body: Observer(
           builder: (context) {
