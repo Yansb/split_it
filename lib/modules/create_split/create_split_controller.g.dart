@@ -48,6 +48,29 @@ mixin _$CreateSplitController on _CreateSplitControllerBase, Store {
     });
   }
 
+  final _$statusAtom = Atom(name: '_CreateSplitControllerBase.status');
+
+  @override
+  CreateSplitStatus get status {
+    _$statusAtom.reportRead();
+    return super.status;
+  }
+
+  @override
+  set status(CreateSplitStatus value) {
+    _$statusAtom.reportWrite(value, super.status, () {
+      super.status = value;
+    });
+  }
+
+  final _$saveEventAsyncAction =
+      AsyncAction('_CreateSplitControllerBase.saveEvent');
+
+  @override
+  Future<void> saveEvent() {
+    return _$saveEventAsyncAction.run(() => super.saveEvent());
+  }
+
   final _$_CreateSplitControllerBaseActionController =
       ActionController(name: '_CreateSplitControllerBase');
 
@@ -90,6 +113,7 @@ mixin _$CreateSplitController on _CreateSplitControllerBase, Store {
     return '''
 event: ${event},
 currentPage: ${currentPage},
+status: ${status},
 enableNavigateButton: ${enableNavigateButton}
     ''';
   }

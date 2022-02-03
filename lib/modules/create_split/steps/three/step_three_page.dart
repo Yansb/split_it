@@ -20,14 +20,22 @@ class StepThreePage extends StatefulWidget {
 }
 
 class _StepThreePageState extends State<StepThreePage> {
+  late ReactionDisposer _disposer;
+
   final controller = StepThreeController();
 
   @override
   void initState() {
-    autorun((_) {
+    _disposer = autorun((_) {
       widget.controller.onChanged(items: controller.items.toList());
     });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _disposer();
+    super.dispose();
   }
 
   @override
