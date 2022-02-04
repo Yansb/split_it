@@ -1,86 +1,91 @@
 import 'package:flutter/material.dart';
-import 'package:split_it/modules/details/models/item_model.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:split_it/modules/details/widget/itens_tile_widget.dart';
+import 'package:split_it/shared/models/item_model.dart';
 import 'package:split_it/shared/utils/numberFormatter.dart';
 import 'package:split_it/theme/app_theme.dart';
 
 class ItensWidget extends StatefulWidget {
-  const ItensWidget({Key? key}) : super(key: key);
+  final List<ItemModel> items;
+  final double remainingValue;
+
+  const ItensWidget(
+      {Key? key, required this.items, required this.remainingValue})
+      : super(key: key);
 
   @override
   State<ItensWidget> createState() => _ItensWidgetState();
 }
 
 class _ItensWidgetState extends State<ItensWidget> {
-  var mockedList = <ItemModel>[
-    ItemModel(title: "Picanha", value: 122),
-    ItemModel(title: "Linguicinhad", value: 17),
-    ItemModel(title: "Carvão", value: 19),
-    ItemModel(title: "Ceverja", value: 68),
-    ItemModel(title: "Refrigerante", value: 12),
-    ItemModel(title: "Pão de alho", value: 15),
-  ];
   final numberFormatter = NumberFormater();
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(color: AppTheme.colors.backgroundPrimary),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              child:
-                  Text("Ítens", style: AppTheme.textStyles.detailsItensTitle),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Text("ÍTENS", style: AppTheme.textStyles.detailsItensTitle),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  ...widget.items.map((e) => ItensTileWidget(
+                        item: e,
+                      ))
+                ],
+              ),
             ),
-            SizedBox(
-              height: 200,
-              child: SingleChildScrollView(
-                child: Column(
+          ),
+          Container(
+            height: 44,
+            decoration: BoxDecoration(color: AppTheme.colors.detailsBackground),
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    ...mockedList.map((e) => ItensTileWidget(
-                          item: e,
-                        ))
+                    Text(
+                      "Total",
+                      style: AppTheme.textStyles.detailsItensTitle,
+                    ),
+                    Text(
+                      numberFormatter.currencyFormatter(
+                          widget.items.fold(0, (a, b) => a + b.value)),
+                      style: AppTheme.textStyles.detailsItensTitle,
+                    ),
                   ],
                 ),
               ),
             ),
-            Container(
-              height: 44,
-              decoration:
-                  BoxDecoration(color: AppTheme.colors.detailsBackground),
-              child: Center(
-                child: ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  leading: Text(
-                    "Total",
-                    style: AppTheme.textStyles.detailsItensTitle,
-                  ),
-                  trailing: Text(
-                    numberFormatter.currencyFormatter(
-                        mockedList.fold(0, (a, b) => a + b.value)),
-                    style: AppTheme.textStyles.detailsItensTitle,
-                  ),
-                ),
-              ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 20, top: 12),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Observer(builder: (context) {
+                      return Text(
+                        "Faltam ${numberFormatter.currencyFormatter(widget.remainingValue)}",
+                        style: AppTheme.textStyles.detailsNegativeSubtitleBold,
+                      );
+                    })
+                  ],
+                )
+              ],
             ),
-            ListTile(
-              contentPadding: EdgeInsets.zero,
-              trailing: Text.rich(TextSpan(
-                text: "Faltam R\$ ",
-                style: AppTheme.textStyles.detailsNegativeSubtitle,
-                children: [
-                  TextSpan(
-                      text: "126,00",
-                      style: AppTheme.textStyles.detailsNegativeSubtitleBold)
-                ],
-              )),
-            )
-          ],
-        ),
+          )
+        ],
       ),
     );
   }

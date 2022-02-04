@@ -55,7 +55,7 @@ class _CreateSplitPageState extends State<CreateSplitPage> {
         BotToast.closeAllLoading();
         BotToast.showText(
             text: "Não foi possível cadastrar esse evento",
-            contentColor: Colors.yellow.shade400);
+            contentColor: Colors.yellow.shade700);
       } else if (controller.status == CreateSplitStatus.loading) {
         BotToast.showLoading();
       }

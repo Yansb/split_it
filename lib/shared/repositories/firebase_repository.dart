@@ -34,13 +34,32 @@ class FirebaseRepository {
     try {
       final response = await firestore.collection(collection).get();
 
-      return response.docs.map((e) => e.data()).toList();
+      return response.docs.map((e) => e.data()..addAll({"id": e.id})).toList();
     } catch (e) {
       rethrow;
     }
   }
 
-  update() {}
-  delete() {}
+  Future<bool> update(
+      {required String id,
+      required String collection,
+      required BaseModel model}) async {
+    try {
+      await this.firestore.collection(collection).doc(id).update(model.toMap());
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> delete({required String id, required String collection}) async {
+    try {
+      await firestore.collection(collection).doc(id).delete();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   firstWhere() {}
 }

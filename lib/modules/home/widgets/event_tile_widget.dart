@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:split_it/modules/details/details_page.dart';
 
 import 'package:split_it/modules/home/widgets/icon_dollar_widget.dart';
 import 'package:split_it/shared/models/event_model.dart';
@@ -9,13 +10,13 @@ import 'package:split_it/theme/app_theme.dart';
 class EventTileWidget extends StatefulWidget {
   final EventModel model;
   final bool isLoading;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
   const EventTileWidget({
     Key? key,
     required this.model,
+    this.onTap,
     this.isLoading = false,
-    required this.onTap,
   }) : super(key: key);
 
   @override
@@ -60,48 +61,50 @@ class _EventTileWidgetState extends State<EventTileWidget> {
       );
     }
 
-    return Row(
-      children: [
-        IconDollarWidget(type: type),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 16),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                ListTile(
-                  onTap: widget.onTap,
-                  contentPadding: EdgeInsets.zero,
-                  title: Text(
-                    widget.model.name,
-                    style: AppTheme.textStyles.eventTileTitle,
+    return InkWell(
+      onTap: widget.onTap,
+      child: Row(
+        children: [
+          IconDollarWidget(type: type),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 16),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    title: Text(
+                      widget.model.name,
+                      style: AppTheme.textStyles.eventTileTitle,
+                    ),
+                    subtitle: Text(
+                      formatClass.dateFormatter(widget.model.created!),
+                      style: AppTheme.textStyles.eventTileSubtitle,
+                    ),
+                    trailing: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          formatClass.currencyFormatter(widget.model.value),
+                          style: AppTheme.textStyles.eventTileMoney,
+                        ),
+                        Text(
+                          "${widget.model.people} ${widget.model.people > 1 ? 'pessoas' : 'pessoa'}",
+                          style: AppTheme.textStyles.eventTilePeople,
+                        )
+                      ],
+                    ),
                   ),
-                  subtitle: Text(
-                    formatClass.dateFormatter(widget.model.created!),
-                    style: AppTheme.textStyles.eventTileSubtitle,
+                  Divider(
+                    color: AppTheme.colors.divider,
                   ),
-                  trailing: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        formatClass.currencyFormatter(widget.model.value),
-                        style: AppTheme.textStyles.eventTileMoney,
-                      ),
-                      Text(
-                        "${widget.model.people} ${widget.model.people > 1 ? 'pessoas' : 'pessoa'}",
-                        style: AppTheme.textStyles.eventTilePeople,
-                      )
-                    ],
-                  ),
-                ),
-                Divider(
-                  color: AppTheme.colors.divider,
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        )
-      ],
+          )
+        ],
+      ),
     );
   }
 }

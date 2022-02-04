@@ -11,10 +11,13 @@ class EventModel extends BaseModel {
   final String name;
   final DateTime? created;
   final double value;
+  final double paid;
+  final String id;
   final List<ItemModel> items;
   final List<FriendModel> friends;
   double get valueSplit => (calcValue / friends.length);
   int get people => friends.length;
+  double get remainingValue => value - paid;
   double get calcValue => items.isNotEmpty
       ? items
           .reduce((value, element) =>
@@ -23,8 +26,10 @@ class EventModel extends BaseModel {
       : 0.0;
 
   EventModel({
+    this.paid = 0.0,
     this.name = '',
     this.created,
+    this.id = "",
     this.value = 0.0,
     this.items = const [],
     this.friends = const [],
@@ -34,6 +39,7 @@ class EventModel extends BaseModel {
     String? name,
     DateTime? created,
     double? value,
+    double? paid,
     List<ItemModel>? items,
     List<FriendModel>? friends,
   }) {
@@ -43,6 +49,7 @@ class EventModel extends BaseModel {
       value: value == 0.0 ? calcValue : this.value,
       items: items ?? this.items,
       friends: friends ?? this.friends,
+      paid: paid ?? this.paid,
     );
   }
 
@@ -53,6 +60,7 @@ class EventModel extends BaseModel {
       'created': FieldValue.serverTimestamp(),
       'value': calcValue,
       'items': items.map((x) => x.toMap()).toList(),
+      'paid': paid,
       'friends': friends.map((x) => x.toMap()).toList(),
     };
   }
@@ -61,7 +69,9 @@ class EventModel extends BaseModel {
     return EventModel(
       name: map['name'],
       created: (map['created'] as Timestamp).toDate(),
-      value: map['value']?.toDouble(),
+      value: double.tryParse(map['value'].toString()) ?? 0.0,
+      paid: double.tryParse(map['paid'].toString()) ?? 0.0,
+      id: map['id'],
       items:
           List<ItemModel>.from(map['items']?.map((x) => ItemModel.fromMap(x))),
       friends: List<FriendModel>.from(

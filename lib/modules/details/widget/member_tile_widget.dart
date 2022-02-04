@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:split_it/modules/login/models/user_model.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:split_it/shared/models/event_model.dart';
+import 'package:split_it/shared/models/friend_model.dart';
 import 'package:split_it/shared/utils/numberFormatter.dart';
-import 'package:split_it/shared/widgets/checkbox_widget.dart';
 import 'package:split_it/theme/app_theme.dart';
 
+import 'checkbox_widget/checkbox_widget.dart';
+
 class MemberTileWidget extends StatefulWidget {
-  final UserModel user;
+  final FriendModel friend;
+  final Function(EventModel newEvent) onChanged;
   final double value;
-  const MemberTileWidget({Key? key, required this.user, required this.value})
-      : super(key: key);
+  final EventModel event;
+  const MemberTileWidget({
+    Key? key,
+    required this.onChanged,
+    required this.friend,
+    required this.value,
+    required this.event,
+  }) : super(key: key);
 
   @override
   State<MemberTileWidget> createState() => _MemberTileWidgetState();
@@ -16,42 +26,38 @@ class MemberTileWidget extends StatefulWidget {
 
 class _MemberTileWidgetState extends State<MemberTileWidget> {
   final formatClass = NumberFormater();
-  var checked = false;
 
-  TextStyle get moneyDetailsBold => checked
+  TextStyle get moneyDetailsBold => widget.friend.isPaid
       ? AppTheme.textStyles.detailsPositiveSubtitleBold
       : AppTheme.textStyles.detailsNegativeSubtitleBold;
-
-  TextStyle get moneyDetails => checked
-      ? AppTheme.textStyles.detailsPositiveSubtitle
-      : AppTheme.textStyles.detailsNegativeSubtitle;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
         contentPadding: EdgeInsets.zero,
-        leading: ClipRRect(
-          child: Image.network(
-            widget.user.photoUrl!,
-            width: 56,
-            height: 56,
-          ),
-          borderRadius: BorderRadius.circular(10),
+        leading: Container(
+          width: 40,
+          height: 40,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              image: DecorationImage(
+                  image: NetworkImage(widget.friend.photoUrl),
+                  fit: BoxFit.cover)),
         ),
         title: Text(
-          widget.user.name!,
+          widget.friend.name,
           style: AppTheme.textStyles.detailsName,
         ),
-        subtitle: Text(
-          formatClass.currencyFormatter(widget.value),
-          style: moneyDetailsBold,
+        subtitle: Observer(
+          builder: (_) => Text(
+            formatClass.currencyFormatter(widget.value),
+            style: moneyDetailsBold,
+          ),
         ),
         trailing: CheckboxWidget(
-          checked: checked,
-          onChanged: (value) {
-            checked = value ?? false;
-            setState(() {});
-          },
+          event: widget.event,
+          friend: widget.friend,
+          onChanged: widget.onChanged,
         ));
   }
 }

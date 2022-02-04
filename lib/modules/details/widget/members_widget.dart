@@ -1,10 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:split_it/modules/details/widget/member_tile_widget.dart';
-import 'package:split_it/modules/login/models/user_model.dart';
+import 'package:split_it/shared/models/event_model.dart';
+import 'package:split_it/shared/models/friend_model.dart';
 import 'package:split_it/theme/app_theme.dart';
 
 class MembersWidget extends StatefulWidget {
-  const MembersWidget({Key? key}) : super(key: key);
+  final List<FriendModel> friends;
+  final double totalValue;
+  final EventModel event;
+  final Function(EventModel newEvent) onChanged;
+
+  const MembersWidget(
+      {Key? key,
+      required this.friends,
+      required this.totalValue,
+      required this.event,
+      required this.onChanged})
+      : super(key: key);
 
   @override
   State<MembersWidget> createState() => _MembersWidgetState();
@@ -35,7 +47,7 @@ class _MembersWidgetState extends State<MembersWidget> {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 20),
                       child: Text(
-                        "Integrantes",
+                        "INTEGRANTES",
                         style: AppTheme.textStyles.detailsSubtitle,
                       ),
                     ),
@@ -43,42 +55,21 @@ class _MembersWidgetState extends State<MembersWidget> {
                       height: 160,
                       child: SingleChildScrollView(
                         child: Column(
-                          children: [
-                            MemberTileWidget(
-                              value: 200,
-                              user: UserModel(
-                                email: "email@email.com",
-                                id: "qewjeoiq",
-                                name: "Você",
-                                photoUrl:
-                                    "https://randomuser.me/api/portraits/men/26.jpg",
-                              ),
-                            ),
-                            MemberTileWidget(
-                              value: 200,
-                              user: UserModel(
-                                email: "email@email.com",
-                                id: "qewjeoiq",
-                                name: "Fulana",
-                                photoUrl:
-                                    "https://randomuser.me/api/portraits/women/60.jpg",
-                              ),
-                            ),
-                            MemberTileWidget(
-                              value: 200,
-                              user: UserModel(
-                                email: "email@email.com",
-                                id: "qewjeoiq",
-                                name: "Fulana",
-                                photoUrl:
-                                    "https://randomuser.me/api/portraits/women/60.jpg",
-                              ),
-                            ),
-                          ],
+                          children: widget.friends
+                              .map(
+                                (e) => MemberTileWidget(
+                                    key: UniqueKey(),
+                                    event: widget.event,
+                                    friend: e,
+                                    value: widget.totalValue /
+                                        widget.friends.length,
+                                    onChanged: widget.onChanged),
+                              )
+                              .toList(),
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 24,
                     )
                   ],

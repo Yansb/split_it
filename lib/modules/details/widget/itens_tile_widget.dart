@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:split_it/modules/details/models/item_model.dart';
+import 'package:split_it/shared/models/item_model.dart';
 import 'package:split_it/shared/utils/numberFormatter.dart';
 import 'package:split_it/theme/app_theme.dart';
 
@@ -16,21 +16,31 @@ class _ItensTileWidgetState extends State<ItensTileWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ListTile(
-          contentPadding: EdgeInsets.zero,
-          leading: Text(
-            widget.item.title,
-            style: AppTheme.textStyles.detailsItensTitle,
+    return SizedBox(
+      height: 43,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                widget.item.name,
+                style: AppTheme.textStyles.detailsItensTitle,
+              ),
+              Text(numberFormater.currencyFormatter(widget.item.value),
+                  style: AppTheme.textStyles.detailsItensTitle),
+            ],
           ),
-          trailing: Text(numberFormater.currencyFormatter(widget.item.value),
-              style: AppTheme.textStyles.detailsItensTitle),
-        ),
-        const Divider(
-          height: 1,
-        ),
-      ],
+          const SizedBox(
+            height: 12,
+          ),
+          const Divider(
+            indent: 0,
+            height: 1,
+          ),
+        ],
+      ),
     );
   }
 }
